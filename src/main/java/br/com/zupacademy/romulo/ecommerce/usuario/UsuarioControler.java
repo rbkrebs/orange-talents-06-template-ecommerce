@@ -1,11 +1,12 @@
 package br.com.zupacademy.romulo.ecommerce.usuario;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -13,7 +14,7 @@ import javax.validation.Valid;
 @RequestMapping("/usuario")
 public class UsuarioControler {
 
-    @Autowired
+    @PersistenceContext
     private EntityManager em;
 
 

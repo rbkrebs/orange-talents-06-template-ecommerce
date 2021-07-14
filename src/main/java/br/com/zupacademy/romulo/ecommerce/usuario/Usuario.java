@@ -1,10 +1,11 @@
 package br.com.zupacademy.romulo.ecommerce.usuario;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 
 @Entity
@@ -20,6 +21,7 @@ public class Usuario {
     private String email;
 
     @NotBlank(message = "O campo senha é obrigatório")
+    @Size(min = 6)
     @Column(nullable = false)
     private String senha;
 
@@ -33,10 +35,10 @@ public class Usuario {
 
 
     public Usuario(@NotBlank String email,
-                   @NotBlank String senha,
-                   @NotBlank Instant criadoEm) {
+                   @Valid @NotNull SenhaLimpa senha
+                 ) {
         this.email = email;
-        this.senha = senha;
-        this.criadoEm = criadoEm;
+        this.senha = senha.hash();
+
     }
 }
