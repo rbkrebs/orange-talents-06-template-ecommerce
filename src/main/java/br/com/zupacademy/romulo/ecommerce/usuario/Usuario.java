@@ -1,7 +1,7 @@
 package br.com.zupacademy.romulo.ecommerce.usuario;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +20,7 @@ public class Usuario {
     private String email;
 
     @NotBlank(message = "O campo senha é obrigatório")
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String senha;
 
     @CreationTimestamp
