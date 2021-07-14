@@ -1,32 +1,31 @@
 package br.com.zupacademy.romulo.ecommerce.usuario;
 
-import org.hibernate.validator.constraints.Length;
+import br.com.zupacademy.romulo.ecommerce.validadores.ValorUnico;
 
 import javax.persistence.EntityManager;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class UsuarioDto {
 
     @Email(message = "Campo email em formato não válido")
-    private String login;
+    @ValorUnico(entidade = "Usuario", atributo = "email")
+    private String email;
 
     @NotBlank
     @Size(min = 6)
     private String senha;
 
-    public UsuarioDto(@NotBlank @Email String login,
+    public UsuarioDto(@NotBlank @Email @ValorUnico String email,
                       @NotBlank @Size(min = 6) String senha) {
-        this.login = login;
+        this.email = email;
         this.senha = senha;
     }
 
-
     public static void save(UsuarioDto usuarioDto, EntityManager em){
 
-        Usuario usuario = new Usuario(usuarioDto.login, new SenhaLimpa(usuarioDto.senha));
+        Usuario usuario = new Usuario(usuarioDto.email, new SenhaLimpa(usuarioDto.senha));
         em.persist(usuario);
 
     }
