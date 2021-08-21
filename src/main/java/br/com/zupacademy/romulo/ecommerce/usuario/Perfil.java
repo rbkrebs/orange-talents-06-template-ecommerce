@@ -16,6 +16,9 @@ public class Perfil implements GrantedAuthority {
 
     private String nome;
 
+    @Deprecated
+    public Perfil (){}
+
     @Override
     public String getAuthority() {
         return this.nome;
