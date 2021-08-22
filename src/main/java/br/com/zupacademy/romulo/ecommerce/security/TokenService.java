@@ -19,6 +19,8 @@ public class TokenService {
     @Value("${ecommerce.jwt.expiration}")
     private String expiration;
 
+    private Long idUsuarioLogado;
+
 
     public String gerarToken(Authentication auth) {
         Usuario logado = (Usuario) auth.getPrincipal();
@@ -56,6 +58,13 @@ public class TokenService {
                 .setSigningKey(this.secret)
                 .parseClaimsJws(token).getBody();
 
-        return Long.parseLong(claims.getSubject());
+        this.idUsuarioLogado = Long.parseLong(claims.getSubject());
+
+        return this.idUsuarioLogado;
+    }
+
+    public Long getIdUsuarioLogado(){
+
+        return this.idUsuarioLogado;
     }
 }
