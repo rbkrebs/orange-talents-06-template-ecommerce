@@ -3,6 +3,7 @@ package br.com.zupacademy.romulo.ecommerce.produto;
 import br.com.zupacademy.romulo.ecommerce.caracteristica.Caracteristica;
 import br.com.zupacademy.romulo.ecommerce.caracteristica.CaracteristicaDTO;
 import br.com.zupacademy.romulo.ecommerce.categoria.Categoria;
+import br.com.zupacademy.romulo.ecommerce.imagem.ImagemProduto;
 import br.com.zupacademy.romulo.ecommerce.usuario.Usuario;
 
 import javax.persistence.*;
@@ -51,6 +52,9 @@ public class Produto {
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private Set<ImagemProduto> imagens = new HashSet<>();
+
     @Deprecated
     public Produto(){}
 
@@ -73,4 +77,14 @@ public class Produto {
                                                                 .collect(Collectors.toSet());
         this.caracteristicas.addAll(novasCaracteristicas);
     }
+
+    public void associaImagens(Set<String> links) {
+
+        Set<ImagemProduto> imagens = links.stream().map( link -> new ImagemProduto(this, link)).collect(Collectors.toSet());
+
+        this.imagens.addAll(imagens);
+
+    }
+
+
 }
